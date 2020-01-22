@@ -64,20 +64,23 @@ def Engine():
         alpha = input("""
 What would you like to do?
 1) Add Customer
-2) View Customers
-3) Create Worksheet
-4) Create Database
-5) Quit
+2) View All Customers
+3) Find Customer
+4) Create Worksheet
+5) Create Database
+6) Quit
 """)
-        if alpha ==("1"):
+        if alpha == ("1"):
             Add_Customer()
-        elif alpha ==("2"):
+        elif alpha == ("2"):
             Read_Database()
-        elif alpha ==("3"):
-            Make_Worksheet()
+        elif alpha == ("3"):
+            Find_Customer()
         elif alpha == ("4"):
+            Make_Worksheet()
+        elif alpha == ("5"):
             Create_Database()
-        elif alpha == ('5'):
+        elif alpha == ('6'):
             print ("Good Bye")
             count += 1
         else:
@@ -450,5 +453,54 @@ def ID():
         alpha = row
         alpha += 1
         return (alpha)
-    
+
+def Find_Customer():
+    count = 0
+    while count == (0):
+        alpha = input("""
+How do you want to search?
+1) First name
+2) Last Name
+3) Phone #
+4) E-Mail
+5) Close
+""")
+        table = sqlite3.connect('test.db')
+        get = table.cursor()
+        bravo = input("Search for: ")
+        print (bravo)
+        if alpha == ("1"):
+            get.execute ("SELECT ID, fname, lname, phone, email FROM database WHERE fname='{}'".format (str(bravo)))
+            rows = get.fetchall()
+            for row in rows:
+                (ID, fname, lname, phone, email) = tuple(row)
+                print (ID, fname, lname,phone,email)
+            count += 1
+        elif alpha == ("2"):
+            get.execute ("SELECT ID, fname, lname, phone, email FROM database WHERE lname='{}'".format (str(bravo)))
+            rows = get.fetchall()
+            for row in rows:
+                (ID, fname, lname, phone, email) = tuple(row)
+                print (ID, fname, lname, phone, email)
+            count += 1
+        elif alpha == ("3"):
+            get.execute ("SELECT ID, fname, lname, phone, email FROM database WHERE phone='{}'".format (str(bravo)))
+            rows = get.fetchall()
+            for row in rows:
+                (ID, fname, lname, phone, email) = tuple(row)
+                print (ID, fname, lname, phone, email)
+            count += 1
+        elif alpha == ("4"):
+            get.execute ("SELECT ID, fname, lname, phone, email FROM database WHERE email='{}'".format (str(bravo)))
+            rows = get.fetchall()
+            for row in rows:
+                (ID, fname, lname, phone, email) = tuple(row)
+                print (ID, fname, lname, phone, email)
+            count += 1
+        elif alpha == ("5"):
+            quit
+            count += 1
+        else:
+            print ("Pelase only use #'s 1-5")
+
 Engine()
