@@ -66,9 +66,10 @@ What would you like to do?
 1) Add Customer
 2) View All Customers
 3) Find Customer
-4) Create Worksheet
-5) Create Database
-6) Quit
+4) Edit Customer
+5) Create Worksheet
+6) Create Database
+7) Quit
 """)
         if alpha == ("1"):
             Add_Customer()
@@ -77,17 +78,19 @@ What would you like to do?
         elif alpha == ("3"):
             Find_Customer()
         elif alpha == ("4"):
-            Make_Worksheet()
+            Edit_Customer()
         elif alpha == ("5"):
+            Make_Worksheet()
+        elif alpha == ("6"):
             Create_Database()
-        elif alpha == ('6'):
+        elif alpha == ('7'):
             print ("Good Bye")
             count += 1
         else:
-            print ("Error. Please use #s 1 - 5 ")
+            print ("Error. Please use #s 1 - 7 ")
 
 def Make_Worksheet():
-    alpha=(input(""))
+    alpha=(input("ID #: "))
     table = sqlite3.connect('test.db')
     get = table.cursor()
     get.execute ("SELECT * FROM database WHERE ID = {}".format(alpha))
@@ -503,4 +506,212 @@ How do you want to search?
         else:
             print ("Pelase only use #'s 1-5")
 
+def Edit_Customer():
+    count = 0
+    while count == (0):
+        alpha=(input("ID #: "))
+        table = sqlite3.connect('test.db')
+        get = table.cursor()
+        get.execute ("SELECT * FROM database WHERE ID = {}".format(alpha))
+        row = get.fetchone()
+        (ID, fname, lname, phone, email, contact_method, province, condition, year, make, model, trim, notes, owner, conquest, conquestplus, other, tyear, tmake, tmodel, ttrim, km, lien, value, note2) = tuple(row) 
+        print (ID, fname, lname, phone, email, contact_method, province, condition, year, make, model, trim, notes, owner, conquest, conquestplus, other, tyear, tmake, tmodel, ttrim, km, lien, value, note2)
+
+        Customer = Client(fname, lname, phone, email, contact_method, province )
+        Auto = Car(condition, year, make, model, trim, notes, owner, conquest, conquestplus, other)
+        Trade_In = Trade(tyear, tmake, tmodel, ttrim, km, lien, value)
+
+        bravo = input ("""
+What do you want to edit?
+1) Customer details
+2) Vehicle of interest
+3) Trade
+4) Add to notes
+""")
+        if bravo == ("1"):
+            charlie = input("""
+What do you want to edit?
+1) First name
+2) Lase name
+3) Phone #
+4) E-mail
+5) Contact Method
+6) Province of residency
+""")
+            if charlie == ("1"):
+                delta = First_Name()
+                get.execute ("UPDATE database SET fname = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("2"):
+                delta = Last_Name()
+                get.execute ("UPDATE database SET lname = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("3"):
+                delta = Phone_Number()
+                get.execute ("UPDATE database SET phone = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie ==("4"):
+                delta = Email()
+                get.execute ("UPDATE database SET email = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("5"):
+                delta = Contact_Method()
+                get.execute ("UPDATE database SET contact_method = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("6"):
+                delta = Province()
+                get.execute ("UPDATE database SET province = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            else:
+                print ("Error. Please return 1 - 6")
+                pass
+
+        elif bravo == ("2"):
+            charlie = input("""
+What do you want to edit?
+1) Condition
+2) Year
+3) Make
+4) Model
+5) Trim
+6) Notes
+7) Loyalty
+8) Conquest
+9) Conquest Plus
+10) Other
+""")
+            if charlie == ("1"):
+                delta = Interest_Condition()
+                get.execute ("UPDATE database SET condition = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("2"):
+                delta = Interest_Year()
+                get.execute ("UPDATE database SET year = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("3"):
+                delta = Interest_Make()
+                get.execute ("UPDATE database SET make = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie ==("4"):
+                delta = Interest_Model()
+                get.execute ("UPDATE database SET model = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("5"):
+                delta = Interest_Trim()
+                get.execute ("UPDATE database SET trim = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("6"):
+                delta = Notes()
+                get.execute ("SELECT notes FROM database WHERE ID = {}".format (int(alpha)))
+                rows = get.fetchone()[0]
+                foxtrot =  (str(rows)+ str(" ") + str(delta))
+                print (foxtrot)
+                get.execute ("UPDATE database SET trim = ? WHERE ID = ?",(foxtrot, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("7"):
+                delta = Program_Owner()
+                get.execute ("UPDATE database SET year = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("8"):
+                delta = Program_Conquest()
+                get.execute ("UPDATE database SET make = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie ==("9"):
+                delta = Program_Conquest_Plus()
+                get.execute ("UPDATE database SET model = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("10"):
+                delta = Program_Other()
+                get.execute ("UPDATE database SET trim = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+               
+            else:
+                print ("Error. Please return 1 - 10")
+
+        elif bravo == ("3"):
+            charlie = input("""
+What do you want to edit?
+1) Year
+2) Make
+3) Model
+4) Trim
+5) KM
+6) Lien
+7) Value
+""")
+            
+            if charlie == ("1"):
+                delta = Trade_Year()
+                get.execute ("UPDATE database SET condition = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("2"):
+                delta = Trade_Make()
+                get.execute ("UPDATE database SET year = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("3"):
+                delta = Trade_Model()
+                get.execute ("UPDATE database SET make = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie ==("4"):
+                delta = Rade_Trim()
+                get.execute ("UPDATE database SET model = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("5"):
+                delta = Trade_KM()
+                get.execute ("UPDATE database SET trim = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1
+            elif charlie == ("6"):
+                delta = Trade_Lien()
+                get.execute ("UPDATE database SET year = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1     
+            elif charlie == ("7"):
+                delta = Trade_Value()
+                get.execute ("UPDATE database SET year = ? WHERE ID = ?",(delta, int(alpha)))
+                table.commit()
+                table.close()
+                count += 1 
+     
 Engine()
