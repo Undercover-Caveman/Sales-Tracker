@@ -1,0 +1,7 @@
+
+Problem: The owner wanted a physical record of every sales interaction within the dealership. It was easy to view this 
+information within the CRM, however it was important to him that we had a physical record where we kept our notes which 
+could be summoned and reviewed upon request.
+
+Solution: Since we know the information he's looking for, we can premake a template that includes those details, and 
+electronically store this information in an SQL file where we can print any particular customer on command. 
